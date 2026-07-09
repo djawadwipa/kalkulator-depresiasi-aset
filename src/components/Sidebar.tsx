@@ -1,12 +1,14 @@
-import type { AppPage } from '../App';
+import type { AppPage, ThemeMode } from '../App';
 
 interface SidebarProps {
   activePage: AppPage;
   setActivePage: (page: AppPage) => void;
   pages: { id: AppPage; label: string; icon: string }[];
+  theme: ThemeMode;
+  toggleTheme: () => void;
 }
 
-export function Sidebar({ activePage, setActivePage, pages }: SidebarProps) {
+export function Sidebar({ activePage, setActivePage, pages, theme, toggleTheme }: SidebarProps) {
   return (
     <aside className="sidebar">
       <div className="sidebar-logo">
@@ -27,6 +29,9 @@ export function Sidebar({ activePage, setActivePage, pages }: SidebarProps) {
       <div className="sidebar-footer">
         <strong>Corporate Finance Tool</strong>
         <span>Offline • PWA • APK</span>
+        <button className="sidebar-theme no-print" onClick={toggleTheme}>
+          {theme === 'dark' ? '☀️ Mode Terang' : '🌙 Mode Gelap'}
+        </button>
       </div>
     </aside>
   );

@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { AppLayout } from './components/AppLayout';
 import { useAssetStore } from './store/assetStore';
 import { AnalisisNilaiBuku } from './pages/AnalisisNilaiBuku';
@@ -9,7 +10,6 @@ import { KalkulatorDepresiasi } from './pages/KalkulatorDepresiasi';
 import { MasterData } from './pages/MasterData';
 import { PanduanPenggunaan } from './pages/PanduanPenggunaan';
 import { RegisterAset } from './pages/RegisterAset';
-import { useState } from 'react';
 
 export type AppPage =
   | 'dashboard'
@@ -21,6 +21,8 @@ export type AppPage =
   | 'analysis'
   | 'master'
   | 'guide';
+
+export type ThemeMode = 'light' | 'dark';
 
 export const pages: { id: AppPage; label: string; icon: string }[] = [
   { id: 'dashboard', label: 'Dashboard', icon: '📊' },
@@ -34,9 +36,27 @@ export const pages: { id: AppPage; label: string; icon: string }[] = [
   { id: 'guide', label: 'Panduan Penggunaan', icon: '📘' }
 ];
 
+const THEME_KEY = 'kalkulator-depresiasi-aset:theme:v1';
+
+function getInitialTheme(): ThemeMode {
+  const saved = localStorage.getItem(THEME_KEY);
+  if (saved === 'dark' || saved === 'light') return saved;
+  return window.matchMedia?.('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+}
+
 export default function App() {
   const [activePage, setActivePage] = useState<AppPage>('dashboard');
+  const [theme, setTheme] = useState<ThemeMode>(getInitialTheme);
   const store = useAssetStore();
+
+  useEffect(() => {
+    document.documentElement.dataset.theme = theme;
+    document.documentElement.style.colorScheme = theme;
+    localStorage.setItem(THEME_KEY, theme);
+    document.querySelector('meta[name="theme-color"]')?.setAttribute('content', theme === 'dark' ? '#07111F' : '#061B3A');
+  }, [theme]);
+
+  const toggleTheme = () => setTheme(previous => previous === 'dark' ? 'light' : 'dark');
 
   const renderPage = () => {
     switch (activePage) {
@@ -54,7 +74,7 @@ export default function App() {
   };
 
   return (
-    <AppLayout activePage={activePage} setActivePage={setActivePage} pages={pages}>
+    <AppLayout activePage={activePage} setActivePage={setActivePage} pages={pages} theme={theme} toggleTheme={toggleTheme}>
       {renderPage()}
     </AppLayout>
   );

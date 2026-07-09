@@ -289,3 +289,117 @@ textarea { min-height: 76px; resize: vertical; }
   .data-table { min-width: 100%; font-size: 10px; }
   .data-table th, .data-table td { padding: 6px; }
 }
+
+/* ===== v1.1: Dark mode + APK export/print friendly styling ===== */
+:root {
+  --heading: #061B3A;
+  --soft: #F8FAFC;
+  --input-bg: #FFFFFF;
+  --row-border: #EEF2F7;
+  --shadow-soft: 0 14px 35px rgba(15,23,42,.06);
+}
+
+html[data-theme="dark"] {
+  --bg: #07111F;
+  --card: #0D1B2A;
+  --line: #203650;
+  --text: #EAF2FF;
+  --heading: #F8FAFC;
+  --slate: #A9B7CA;
+  --soft: #0A1424;
+  --input-bg: #07111F;
+  --row-border: #1E2F48;
+  --shadow-soft: 0 16px 42px rgba(0,0,0,.36);
+}
+
+.header-title { flex: 1; min-width: 0; }
+.theme-toggle, .sidebar-theme {
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--soft);
+  color: var(--heading);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 12px;
+  font-weight: 900;
+  box-shadow: 0 8px 22px rgba(15,23,42,.07);
+}
+.theme-toggle b { font-size: 12px; }
+.sidebar-theme { justify-content: center; border-color: rgba(255,255,255,.16); background: rgba(255,255,255,.12); color: white; width: 100%; margin-top: 8px; }
+
+.app-header h1, h2, h3, .filter-bar label, .modal-card label, .panel-card label, .kpi-value, .field-list b, .icon-button, .btn, .example-box { color: var(--heading); }
+.kpi-card, .table-wrap { background: var(--card); box-shadow: var(--shadow-soft); }
+.field-list span, .formula-grid p, .example-box { background: var(--soft); }
+.data-table td { color: var(--text); border-bottom-color: var(--row-border); }
+.data-table tbody tr:hover { background: var(--soft); }
+input, select, textarea { color: var(--text); background: var(--input-bg); border-color: #CBD5E1; }
+
+html[data-theme="dark"] body {
+  background: radial-gradient(circle at top left, rgba(0, 141, 132, 0.15), transparent 32rem), linear-gradient(180deg, #07111F, #091827);
+}
+html[data-theme="dark"] .app-header {
+  background: rgba(13,27,42,.88);
+  border-color: rgba(51,65,85,.92);
+  box-shadow: 0 16px 44px rgba(0,0,0,.34);
+}
+html[data-theme="dark"] .hero-card,
+html[data-theme="dark"] .panel-card,
+html[data-theme="dark"] .chart-card,
+html[data-theme="dark"] .legend-card,
+html[data-theme="dark"] .formula-card,
+html[data-theme="dark"] .guide-card,
+html[data-theme="dark"] .section-heading,
+html[data-theme="dark"] .filter-bar,
+html[data-theme="dark"] .empty-state,
+html[data-theme="dark"] .split-section > div {
+  background: rgba(13,27,42,.94);
+  border-color: var(--line);
+  box-shadow: var(--shadow-soft);
+}
+html[data-theme="dark"] .dashboard-hero { background: linear-gradient(135deg, #0D1B2A, #082A3C 48%, #07111F); }
+html[data-theme="dark"] .sidebar-logo { background: #FFFFFF; }
+html[data-theme="dark"] input,
+html[data-theme="dark"] select,
+html[data-theme="dark"] textarea { border-color: #334155; background: #07111F; }
+html[data-theme="dark"] input::placeholder,
+html[data-theme="dark"] textarea::placeholder { color: #72839B; }
+html[data-theme="dark"] .btn.secondary,
+html[data-theme="dark"] .icon-button { background: #132746; color: #EAF2FF; }
+html[data-theme="dark"] .btn.danger,
+html[data-theme="dark"] .btn.tiny.danger { background: #3B1217; color: #FCA5A5; }
+html[data-theme="dark"] .readonly { background: #0B2A3F; color: #EAF2FF; }
+html[data-theme="dark"] .modal-card { background: #0D1B2A; color: var(--text); }
+html[data-theme="dark"] .modal-backdrop { background: rgba(0,0,0,.72); }
+html[data-theme="dark"] .progress { background: #1E293B; }
+html[data-theme="dark"] .recharts-cartesian-grid line { stroke: #334155; }
+html[data-theme="dark"] .recharts-text { fill: #A9B7CA; }
+html[data-theme="dark"] .recharts-legend-item-text { color: #A9B7CA !important; }
+html[data-theme="dark"] .recharts-default-tooltip { background: #0D1B2A !important; border-color: #334155 !important; color: #EAF2FF !important; }
+html[data-theme="dark"] .table-wrap { border-color: var(--line); }
+html[data-theme="dark"] .status-dijual,
+html[data-theme="dark"] .status-rusak,
+html[data-theme="dark"] .status-dihapuskan { background: #334155; color: #EAF2FF; }
+
+@media (max-width: 860px) {
+  .app-header { gap: 10px; padding: 12px; }
+  .logo-button img { width: 46px; height: 46px; border-radius: 14px; }
+  .theme-toggle { padding: 9px; }
+  .theme-toggle b { display: none; }
+}
+
+@media print {
+  html[data-theme="dark"] body { background: white; color: #0F172A; }
+  html[data-theme="dark"] .hero-card,
+  html[data-theme="dark"] .panel-card,
+  html[data-theme="dark"] .chart-card,
+  html[data-theme="dark"] .legend-card,
+  html[data-theme="dark"] .formula-card,
+  html[data-theme="dark"] .guide-card,
+  html[data-theme="dark"] .section-heading,
+  html[data-theme="dark"] .filter-bar,
+  html[data-theme="dark"] .empty-state,
+  html[data-theme="dark"] .split-section > div,
+  html[data-theme="dark"] .kpi-card,
+  html[data-theme="dark"] .table-wrap { background: white; color: #0F172A; }
+}
