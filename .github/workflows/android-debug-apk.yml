@@ -1,0 +1,61 @@
+name: Android Debug APK
+
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+
+jobs:
+  build-android-apk:
+    name: Build APK Android Debug
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Setup Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - name: Install dependencies
+        run: npm ci || npm install
+
+      - name: Build web app
+        run: npm run build
+
+      - name: Create Android project from Capacitor
+        run: |
+          rm -rf android
+          npx cap add android
+
+      - name: Generate Android icon and splash from uploaded logo
+        run: npm run assets:android
+
+      - name: Sync Capacitor Android
+        run: npx cap sync android
+
+      - name: Build debug APK
+        run: |
+          cd android
+          chmod +x ./gradlew
+          ./gradlew assembleDebug
+
+      - name: Rename APK artifact
+        run: |
+          mkdir -p release
+          cp android/app/build/outputs/apk/debug/app-debug.apk release/Kalkulator-Depresiasi-Aset-debug.apk
+
+      - name: Upload APK artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Kalkulator-Depresiasi-Aset-debug.apk
+          path: release/Kalkulator-Depresiasi-Aset-debug.apk
+          if-no-files-found: error

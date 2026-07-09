@@ -1,0 +1,36 @@
+{
+  "name": "kalkulator-depresiasi-aset-perusahaan",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Kalkulator Depresiasi Aset Perusahaan berbasis Excel, PWA, dan APK Android.",
+  "scripts": {
+    "dev": "vite --host 0.0.0.0",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview --host 0.0.0.0",
+    "cap:add:android": "cap add android",
+    "cap:sync": "cap sync android",
+    "assets:android": "capacitor-assets generate --android",
+    "apk:debug": "npm run build && npm run cap:sync && cd android && ./gradlew assembleDebug"
+  },
+  "dependencies": {
+    "@capacitor/android": "latest",
+    "@capacitor/core": "latest",
+    "@capacitor/splash-screen": "latest",
+    "@vitejs/plugin-react": "latest",
+    "recharts": "latest",
+    "vite": "latest",
+    "react": "latest",
+    "react-dom": "latest"
+  },
+  "devDependencies": {
+    "@capacitor/assets": "latest",
+    "@capacitor/cli": "latest",
+    "@types/react": "latest",
+    "@types/react-dom": "latest",
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.4.49",
+    "tailwindcss": "^3.4.17",
+    "typescript": "latest"
+  }
+}
